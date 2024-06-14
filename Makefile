@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall -Wextra -pedantic -std=c++11
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-SRCS = ./src/main.cpp ./src/Tetromino.cpp 
+SRCS = ./src/main.cpp ./src/Tetromino.cpp ./src/grid.cpp
 OBJS = $(SRCS:.cpp=.o)
 EXEC = main
 %.o: %.cpp

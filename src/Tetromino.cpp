@@ -1,6 +1,6 @@
 #include "Tetromino.hpp"
 
-Tetromino::Tetromino(int r, int c, std::vector<std::vector<sf::Color>>& game_matrix, sf::Color bgcolor)
+Tetromino::Tetromino(int r, int c, TetrisGame& gameGrid, sf::Color bgcolor)
     : rows(r)
     , cols(c)
     , background_color(bgcolor)
@@ -15,37 +15,37 @@ Tetromino::Tetromino(int r, int c, std::vector<std::vector<sf::Color>>& game_mat
 
     for (auto& xy : position) {
         auto [x, y] = xy;
-        if (game_matrix[x][y] != background_color) {
+        if (gameGrid.getColor(x, y) != background_color) {
             over = true;
         }
     }
 
     if (!over)
-        drawcurr(game_matrix);
+        drawcurr(gameGrid);
 }
 
-void Tetromino::drawcurr(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::drawcurr(TetrisGame& gameGrid) {
     for (auto& xy : position) {
         auto [x, y] = xy;
-        game_matrix[x][y] = color;
+        gameGrid.setColor(x, y, color); 
     }
 }
 
-void Tetromino::clearcurr(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::clearcurr(TetrisGame& gameGrid) {
     for (auto& xy : position) {
         auto [x, y] = xy;
-        game_matrix[x][y] = background_color;
+        gameGrid.setColor(x, y, background_color); 
     }
 }
 
-void Tetromino::movedown(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::movedown(TetrisGame& gameGrid) {
     if (!over) {
-        clearcurr(game_matrix);
+        clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (x + 1 >= rows || game_matrix[x + 1][y] != background_color) {
+            if (x + 1 >= rows || gameGrid.getColor(x + 1, y) != background_color) {
                 contact = true;
-                drawcurr(game_matrix);
+                drawcurr(gameGrid);
                 return;
             }
         }
@@ -54,17 +54,17 @@ void Tetromino::movedown(std::vector<std::vector<sf::Color>>& game_matrix) {
             xy.first++;
         }
 
-        drawcurr(game_matrix);
+        drawcurr(gameGrid);
     }
 }
 
-void Tetromino::moveleft(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::moveleft(TetrisGame& gameGrid) {
     if (!over) {
-        clearcurr(game_matrix);
+        clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (y - 1 < 0 || game_matrix[x][y - 1] != background_color) {
-                drawcurr(game_matrix);
+            if (y - 1 < 0 || gameGrid.getColor(x, y - 1) != background_color) {
+                drawcurr(gameGrid);
                 return;
             }
         }
@@ -72,7 +72,7 @@ void Tetromino::moveleft(std::vector<std::vector<sf::Color>>& game_matrix) {
         for (auto& xy : position) {
             xy.second--;
         }
-        drawcurr(game_matrix);
+        drawcurr(gameGrid);
     }
 }
 
@@ -80,13 +80,13 @@ bool Tetromino::getcontact() {
     return contact;
 }
 
-void Tetromino::moveright(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::moveright(TetrisGame& gameGrid) {
     if (!over) {
-        clearcurr(game_matrix);
+        clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (y + 1 >= cols || game_matrix[x][y + 1] != background_color) {
-                drawcurr(game_matrix);
+            if (y + 1 >= cols || gameGrid.getColor(x, y + 1) != background_color) {
+                drawcurr(gameGrid);
                 return;
             }
         }
@@ -95,13 +95,13 @@ void Tetromino::moveright(std::vector<std::vector<sf::Color>>& game_matrix) {
             xy.second++;
         }
 
-        drawcurr(game_matrix);
+        drawcurr(gameGrid);
     }
 }
 
-void Tetromino::moveup(std::vector<std::vector<sf::Color>>& game_matrix) {
+void Tetromino::moveup(TetrisGame& gameGrid) {
     if (!over) {
-        clearcurr(game_matrix);
+        clearcurr(gameGrid);
 
         int pivotX = position[0].first;
         int pivotY = position[0].second;
@@ -110,8 +110,8 @@ void Tetromino::moveup(std::vector<std::vector<sf::Color>>& game_matrix) {
             int newx = pivotX + position[i].second - pivotY;
             int newy = pivotY - position[i].first + pivotX;
 
-            if (newx < 0 || newx >= rows || newy < 0 || newy >= cols || game_matrix[newx][newy] != background_color) {
-                clearcurr(game_matrix);
+            if (newx < 0 || newx >= rows || newy < 0 || newy >= cols || gameGrid.getColor(newx, newy) != background_color) {
+                clearcurr(gameGrid);
                 return;
             }
         }
@@ -122,6 +122,6 @@ void Tetromino::moveup(std::vector<std::vector<sf::Color>>& game_matrix) {
             xy = std::make_pair<int, int>(pivotX + y - pivotY, pivotY - x + pivotX);
         }
 
-        drawcurr(game_matrix);
+        drawcurr(gameGrid);
     }
 }

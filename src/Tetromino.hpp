@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib> 
+#include "grid.hpp"
 
 const sf::Color COLORS[7] = {
     sf::Color(0xFF6347FF),  // Carrot Orange
@@ -37,13 +38,13 @@ public:
     int cols;
     sf::Color background_color;
 
-    Tetromino(int r, int c, std::vector<std::vector<sf::Color>> &game_matrix, sf::Color bgcolor);
-    void drawcurr(std::vector<std::vector<sf::Color>> &game_matrix);
-    void clearcurr(std::vector<std::vector<sf::Color>> &game_matrix);
-    void movedown(std::vector<std::vector<sf::Color>> &game_matrix);
-    void moveleft(std::vector<std::vector<sf::Color>> &game_matrix);
-    void moveright(std::vector<std::vector<sf::Color>> &game_matrix);
-    void moveup(std::vector<std::vector<sf::Color>> &game_matrix);
+    Tetromino(int r, int c, TetrisGame &gameGrid, sf::Color bgcolor);
+    void drawcurr(TetrisGame &gameGrid);
+    void clearcurr(TetrisGame &gameGrid);
+    void movedown(TetrisGame &gameGrid);
+    void moveleft(TetrisGame &gameGrid);
+    void moveright(TetrisGame &gameGrid);
+    void moveup(TetrisGame &gameGrid);
     bool getcontact();
 };
 
