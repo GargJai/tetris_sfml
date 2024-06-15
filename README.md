@@ -1,6 +1,6 @@
 # Tetris Game
 
-This is a simple Tetris game implemented in C++ using the SFML library. 
+This is a Tetris game implemented in C++ using the SFML library.
 
 ## Dependencies
 

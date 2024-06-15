@@ -15,7 +15,6 @@ int main() {
     TetrisGame gameGrid(rows, cols, backgroundColor, cellSide);
     Tetromino tetromino(rows, cols, gameGrid, backgroundColor);
 
-    // Create the window with a fixed size and no resize option
     sf::RenderWindow window(
         sf::VideoMode(cols * cellSide, rows * cellSide), 
         "tetris_sfml", 
