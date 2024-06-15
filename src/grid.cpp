@@ -6,9 +6,9 @@ TetrisGame::TetrisGame(int rows, int cols, sf::Color backgroundColor, float cell
 
 void TetrisGame::updateGameMatrix() {
     std::vector<std::vector<sf::Color>> lgameMatrix(rows, std::vector<sf::Color>(cols, backgroundColor));
-    int curr_row = rows - 1;
+    int currRow = rows - 1;
 
-    for (int i = rows - 1; i >= 0; i--) {
+    for (int i = currRow; i >= 0; i--) {
         int cnt = 0;
         for (int j = 0; j < cols; j++) {
             if (gameMatrix[i][j] != backgroundColor) cnt++;
@@ -16,9 +16,13 @@ void TetrisGame::updateGameMatrix() {
 
         if (cnt != cols) {
             for (int j = 0; j < cols; j++) {
-                lgameMatrix[curr_row][j] = gameMatrix[i][j];
+                lgameMatrix[currRow][j] = gameMatrix[i][j];
             }
-            curr_row--;
+            currRow--;
+        }
+        else {
+            score += 10; 
+            highestScore = std::max(highestScore, score); 
         }
     }
 
@@ -60,3 +64,10 @@ void TetrisGame::setColor(int r, int c, sf::Color clr) {
     gameMatrix[r][c] = clr; 
 }
 
+void TetrisGame::setOver(bool flg) {
+    over = flg; 
+}
+
+int TetrisGame::getScore() {
+    return score; 
+}

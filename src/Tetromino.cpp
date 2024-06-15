@@ -1,9 +1,9 @@
 #include "Tetromino.hpp"
 
-Tetromino::Tetromino(int r, int c, TetrisGame& gameGrid, sf::Color bgcolor)
+Tetromino::Tetromino(int r, int c, TetrisGame& gameGrid, sf::Color bgColor)
     : rows(r)
     , cols(c)
-    , background_color(bgcolor)
+    , backgroundColor(bgColor)
 {
     srand(time(0));
     int idx = rand() % 7;
@@ -15,13 +15,17 @@ Tetromino::Tetromino(int r, int c, TetrisGame& gameGrid, sf::Color bgcolor)
 
     for (auto& xy : position) {
         auto [x, y] = xy;
-        if (gameGrid.getColor(x, y) != background_color) {
+        if (gameGrid.getColor(x, y) != backgroundColor) {
             over = true;
         }
     }
 
     if (!over)
         drawcurr(gameGrid);
+}
+
+bool Tetromino::getOver() {
+    return over; 
 }
 
 void Tetromino::drawcurr(TetrisGame& gameGrid) {
@@ -34,7 +38,7 @@ void Tetromino::drawcurr(TetrisGame& gameGrid) {
 void Tetromino::clearcurr(TetrisGame& gameGrid) {
     for (auto& xy : position) {
         auto [x, y] = xy;
-        gameGrid.setColor(x, y, background_color); 
+        gameGrid.setColor(x, y, backgroundColor); 
     }
 }
 
@@ -43,7 +47,7 @@ void Tetromino::movedown(TetrisGame& gameGrid) {
         clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (x + 1 >= rows || gameGrid.getColor(x + 1, y) != background_color) {
+            if (x + 1 >= rows || gameGrid.getColor(x + 1, y) != backgroundColor) {
                 contact = true;
                 drawcurr(gameGrid);
                 return;
@@ -63,7 +67,7 @@ void Tetromino::moveleft(TetrisGame& gameGrid) {
         clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (y - 1 < 0 || gameGrid.getColor(x, y - 1) != background_color) {
+            if (y - 1 < 0 || gameGrid.getColor(x, y - 1) != backgroundColor) {
                 drawcurr(gameGrid);
                 return;
             }
@@ -85,7 +89,7 @@ void Tetromino::moveright(TetrisGame& gameGrid) {
         clearcurr(gameGrid);
         for (auto& xy : position) {
             auto [x, y] = xy;
-            if (y + 1 >= cols || gameGrid.getColor(x, y + 1) != background_color) {
+            if (y + 1 >= cols || gameGrid.getColor(x, y + 1) != backgroundColor) {
                 drawcurr(gameGrid);
                 return;
             }
@@ -110,7 +114,7 @@ void Tetromino::moveup(TetrisGame& gameGrid) {
             int newx = pivotX + position[i].second - pivotY;
             int newy = pivotY - position[i].first + pivotX;
 
-            if (newx < 0 || newx >= rows || newy < 0 || newy >= cols || gameGrid.getColor(newx, newy) != background_color) {
+            if (newx < 0 || newx >= rows || newy < 0 || newy >= cols || gameGrid.getColor(newx, newy) != backgroundColor) {
                 clearcurr(gameGrid);
                 return;
             }

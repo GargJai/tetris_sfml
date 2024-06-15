@@ -36,7 +36,7 @@ public:
     bool over = false;
     int rows;
     int cols;
-    sf::Color background_color;
+    sf::Color backgroundColor;
 
     Tetromino(int r, int c, TetrisGame &gameGrid, sf::Color bgcolor);
     void drawcurr(TetrisGame &gameGrid);
@@ -46,6 +46,7 @@ public:
     void moveright(TetrisGame &gameGrid);
     void moveup(TetrisGame &gameGrid);
     bool getcontact();
+    bool getOver(); 
 };
 
 #endif // TETROMINO_H
