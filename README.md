@@ -2,6 +2,8 @@
 
 This is a Tetris game implemented in C++ using the SFML library.
 
+![Tetris Gameplay](./assets/images/tetris.png)
+
 ## Dependencies
 
 - SFML library 
@@ -27,6 +29,3 @@ This is a Tetris game implemented in C++ using the SFML library.
     ```bash
     ./main
     ```
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
